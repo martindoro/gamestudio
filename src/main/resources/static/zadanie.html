@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game Score Site</title>
+<link rel="stylesheet" href="css/normalize.css" />
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/zadanie.css" />
+</head>
+
+<body>
+
+	<main>
+	<h2 class="topHeader">
+		<b>Game score site</b>
+	</h2>
+	<p class="paragraph">
+		<b>Enter your score and compare with others.</b>
+	</p>
+	<a href="mailto:webmaster@gmail.com">CONTACT WEBMASTER</a>
+	<div class="container">
+		<div class="row">
+			<div class="col-3">
+				<form id="frmNewScore">
+					<label><b>Score</b><input type="text" id="inNewScore"
+						placeholder="Enter score" /> </label>
+				</form>
+			</div>
+			<div class="col-3">
+				<form id="frmUsername">
+					<label><b>Username</b><input type="text" id="inUsername"
+						placeholder="Enter username" /> </label>
+				</form>
+			</div>
+			<div class="col-3">
+				<label for="sel1"><b>Game</b></label> <select class="form-control"
+					id="sel1">
+					<option value="sotb1">Shadow of the Beast 1</option>
+					<option value="sotb2">Shadow of the Beast 2</option>
+					<option value="sotb3">Shadow of the Beast 3</option>
+				</select>
+			</div>
+			<div class="col-3">
+				<button type="button" id="btSaveScore">Save score!</button>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+
+	<h2>Top scores tables</h2>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-4">
+				<h5>Shadow of the Beast 1</h5>
+				<hr>
+				<div id="scoreTableSOTB1"></div>
+			</div>
+			<div class="col-4">
+				<h5>Shadow of the Beast 2</h5>
+				<hr>
+				<div id="scoreTableSOTB2"></div>
+			</div>
+			<div class="col-4">
+				<h5>Shadow of the Beast 3</h5>
+				<hr>
+				<div id="scoreTableSOTB3"></div>
+			</div>
+		</div>
+	</div>
+	</main>
+	<p>
+		<a href="http://jigsaw.w3.org/css-validator/check/referer"> <img
+			style="border: 0; width: 88px; height: 31px"
+			src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" />
+		</a>
+	</p>
+
+
+	<!-- Mustache sablona pre jednu ulohu -->
+	<script id="tmplScores" type="text/template">
+    <ol>
+	<table>
+    <tr><th><i>Name</i></th><th><i>score</i></th></tr>
+	{{#.}}
+	<tr>
+    <td><li>{{username}}</li></td><td><b>{{value}}</b></td>
+	</tr>    
+	{{/.}}
+    </ol>
+</script>
+
+
+	<!-- Vlozenie jQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous">
+		
+	</script>
+	<!--Linka na CDN je z https://code.jquery.com/-->
+	<script>
+		window.jQuery
+				|| document.write('<script src="js/jquery.min.js"><\/script>')
+	</script>
+
+
+	<!-- Vlozenie Mustache -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+	<script>
+		window.Mustache
+				|| document
+						.write('<script src="js/mustache.min.js"><\/script>')
+	</script>
+
+	<!-- Vlozenie skriptu pre tuto stranku  -->
+	<!-- <script src="js/ajaxDemo.js"></script> -->
+	<script src="js/zadanie.js"></script>
+
+
+
+</body>
+</html>

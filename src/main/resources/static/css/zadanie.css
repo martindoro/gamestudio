@@ -1,0 +1,40 @@
+html {
+    font-size: 100%;
+    font-family: "Times New Roman", Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-align: justify;
+    color: black;
+}
+
+h1, h2, h5{
+    padding:1rem;
+    text-align:center;
+}
+
+h2.topHeader {
+	background-image: url("img/sotb.jpg");
+}
+
+main {
+	margin-top: 1rem;
+	}
+
+th, li {
+	padding:1rem;
+	text-align: center;
+}
+
+.paragraph {
+	text-align:center;
+}
+
+td {
+	text-align: right;
+}
+
+button {
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+

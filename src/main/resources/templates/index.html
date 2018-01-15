@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Game Studio</title>
+<link rel="stylesheet" href="css/bootstrap.css"></link>
+<link rel="stylesheet" href="css/gameStudio.css"></link>
+</head>
+<body>
+	<div th:replace="header::nice_header"></div>
+	
+	<div class="log" th:if='${@userController.logged}'>
+		<h4 class="centered" th:if='${not #lists.isEmpty(favorites)}'>
+			MY FAVORITE GAMES
+			<table>
+				<tr th:each='favorite : ${favorites}'>
+					<td><h6 class="centered">
+							<a th:href='${favorite.game}'><img
+								th:src='${"images/" + favorite.game + "/" + favorite.game + "_logo.gif"}' height="70" width="70" />
+							</a>
+						</h6></td>
+				</tr>
+			</table>
+		</h4>
+	</div>
+
+	<h2 class="centered">ALL GAMES</h2>
+
+	<div>
+		<p class="log" th:if='${not @userController.logged}'>
+			<a href="/login"><img src="/images/login.png" alt="Login" />Login</a>
+			<a href="/register"><img src="/images/register.png"
+				alt="register" />Register</a>
+		</p>
+		<p class="log" th:if='${@userController.logged}'>
+			<a href="/logout"><img src="/images/logout.png" alt="Logout" />Logout</a>
+		</p>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-3">
+				<p class="game_info">
+					<b>MINESWEEPER</b>
+				</p>
+				<p class="game_info">
+					(Average rating <span
+						th:text='${#numbers.formatDecimal(avg_mines,1,1)}'></span> out of
+					5)
+				</p>
+				<a href="/mines"> <img src="/images/mines/mines_logo.gif"
+					alt="Minesweeper" height="170" width="170" />
+				</a>
+			</div>
+			<div class="col-3">
+				<p class="game_info">
+					<b>15 PUZZLE</b>
+				</p>
+				<p class="game_info">
+					(Average rating <span
+						th:text='${#numbers.formatDecimal(avg_puzzle,1,1)}'></span> out of
+					5)
+				</p>
+				<a href="/puzzle"> <img src="/images/puzzle/puzzle_logo.gif"
+					alt="15 Puzzle" height="170" width="170" />
+				</a>
+			</div>
+			<div class="col-3">
+				<p class="game_info">
+					<b>GUESS THE NUMBER</b>
+				</p>
+				<p class="game_info">
+					(Average rating <span
+						th:text='${#numbers.formatDecimal(avg_guess,1,1)}'></span> out of
+					5)
+				</p>
+				<a href="/guess"> <img src="/images/guess/guess_logo.gif"
+					alt="Guess Number" height="170" width="170" />
+				</a>
+			</div>
+			<div class="col-3">
+				<p class="game_info">
+					<b>MEMOS</b>
+				</p>
+				<p class="game_info">
+					(Average rating <span
+						th:text='${#numbers.formatDecimal(avg_memos,1,1)}'></span> out of
+					5)
+				</p>
+				<a href="/memos"> <img src="/images/memos/memos_logo.gif"
+					alt="Memos" height="170" width="170" />
+				</a>
+			</div>
+		</div>
+	</div>
+	
+		<div class="container">
+		<div class="row">
+			<div class="col-3">
+				<p class="game_info">
+					<b>SLIDER</b>
+				</p>
+				<p class="game_info">
+					(Average rating <span
+						th:text='${#numbers.formatDecimal(avg_slider,1,1)}'></span> out of
+					5)
+				</p>
+				<a href="/slider"> <img src="/images/slider/slider_logo.gif"
+					alt="Slider" height="170" width="170" />
+				</a>
+			</div>
+			<div class="col-3">
+			</div>
+			<div class="col-3">
+			</div>
+			<div class="col-3">
+			</div>
+		</div>
+	</div>
+	<div th:replace="footer::nice_footer"></div>
+
+</body>
+</html>

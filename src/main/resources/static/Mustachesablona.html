@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)http://hron.fei.tuke.sk/~korecko/WebTechAkademia/wtAcadEx/03Mustache.html -->
+<html lang="sk"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Mustache šablona</title>
+</head>
+<body>
+
+
+<script src="./Mustache šablona_files/mustache.min.js.download"></script>
+<script>window.Mustache || document.write('<script src="js/mustache.min.js"><\/script>')</script>
+
+<script>
+    var os1 = {
+        meno:"Ján",
+        priezvisko: "Trieska"
+    }
+
+    var tmpl1="<p> {{meno}} {{priezvisko}} </p>";
+
+    document.write(Mustache.render(tmpl1,os1));
+
+</script><p> Ján Trieska </p>
+
+<hr>
+
+
+<script>
+    var os2 = {
+        meno:"Ján",
+        priezvisko: "Trieska",
+        zaluby:["telka","les"]
+    }
+
+    var tmpl2a="<p> {{meno}} {{priezvisko}} <br>Záľuby: {{zaluby}} </p>";
+
+    document.write(Mustache.render(tmpl2a,os2));
+
+</script><p> Ján Trieska <br>Záľuby: telka,les </p>
+
+<hr>
+
+
+<script>
+
+    var tmpl2b="<p> {{meno}} {{priezvisko}} <br>Záľuby: {{#zaluby}} {{.}} * {{/zaluby}} </p>";
+
+    document.write(Mustache.render(tmpl2b,os2));
+
+</script><p> Ján Trieska <br>Záľuby:  telka *  les *  </p>
+
+
+<hr>
+
+<script>
+    var os3 = {
+        "osoby":[
+            {
+                meno: "Ján",
+                priezvisko: "Trieska",
+                zaluby: ["telka", "les"]
+            },
+            {
+                meno: "Jozef",
+                priezvisko: "Mrvk",
+            }
+        ]
+    };
+
+    var tmpl3a="{{#osoby}} <p> {{meno}} {{priezvisko}} <br>Záľuby: {{zaluby}} </p> {{/osoby}}";
+
+    document.write(Mustache.render(tmpl3a,os3));
+
+</script> <p> Ján Trieska <br>Záľuby: telka,les </p>  <p> Jozef Mrvk <br>Záľuby:  </p> 
+
+<hr>
+
+<script>
+    var tmpl3b="{{#osoby}} <p> {{meno}} {{priezvisko}} " +
+            "<br>Záľuby: {{zaluby}} {{^zaluby}} žiadne {{/zaluby}} " +
+            "</p> {{/osoby}}";
+
+    document.write(Mustache.render(tmpl3b,os3));
+
+</script> <p> Ján Trieska <br>Záľuby: telka,les  </p>  <p> Jozef Mrvk <br>Záľuby:   žiadne  </p> 
+
+<hr>
+
+<script>
+    var os4 = [
+            {
+                meno: "Ján",
+                priezvisko: "Trieska",
+                zaluby: ["telka", "les"]
+            },
+            {
+                meno: "Jozef",
+                priezvisko: "Mrvk",
+            }
+        ];
+
+    var tmpl4="{{#.}} <p> {{meno}} {{priezvisko}} " +
+            "<br>Záľuby: {{zaluby}} {{^zaluby}} žiadne {{/zaluby}} " +
+            "</p> {{/.}}";
+
+    document.write(Mustache.render(tmpl4,os4));
+
+</script> <p> Ján Trieska <br>Záľuby: telka,les  </p>  <p> Jozef Mrvk <br>Záľuby:   žiadne  </p> 
+
+
+<hr>
+<hr>
+
+<script>
+    var artcl = {
+        "header": "<h2>Borovica</h2>",
+        "content":"<p>Ihličnatý strom s mäkkým drevom. Jej ihličie opadáva každé  2 až 4 roky.</p><dl><dt>Latinský názov:<dd>Pinus.<dt>Oddelenie:<dd>Borovicorasty</dl>"
+    };
+
+    var tmpl5a="{{header}} {{content}}";
+
+    document.write(Mustache.render(tmpl5a,artcl));
+
+</script>&lt;h2&gt;Borovica&lt;/h2&gt; &lt;p&gt;Ihličnatý strom s mäkkým drevom. Jej ihličie opadáva každé  2 až 4 roky.&lt;/p&gt;&lt;dl&gt;&lt;dt&gt;Latinský názov:&lt;dd&gt;Pinus.&lt;dt&gt;Oddelenie:&lt;dd&gt;Borovicorasty&lt;/dl&gt;
+
+<hr>
+
+<script>
+    var tmpl5b="{{{header}}} {{{content}}}";
+
+    document.write(Mustache.render(tmpl5b,artcl));
+
+</script><h2>Borovica</h2> <p>Ihličnatý strom s mäkkým drevom. Jej ihličie opadáva každé  2 až 4 roky.</p><dl><dt>Latinský názov:</dt><dd>Pinus.</dd><dt>Oddelenie:</dt><dd>Borovicorasty</dd></dl>
+
+
+
+</body></html>

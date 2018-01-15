@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="./css/gameStudio.css" />
+</head>
+<body>
+	<div th:fragment="nice_footer">
+		<hr />
+		<p class="footer">
+			WebPage by Martin Doro 2018. <span th:if='${@userController.logged}'>
+				Logged in as <b><span style="text-transform: uppercase"
+					th:text='${@userController.loggedPlayer?.login}'></span></b>.
+			</span> <span th:if='${not @userController.logged}'> You are not
+				logged in. </span> <a href="/">HOME</a>
+		</p>
+	</div>
+</body>
+</html>

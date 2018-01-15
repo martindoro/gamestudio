@@ -1,0 +1,108 @@
+html {
+    font-size: 100%;
+    font-family: "Tw Cen MT", Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-align: justify;
+    color: black;
+}
+
+body {
+    background-image: url("/images/webpage_bckgrnd.jpg");
+}
+
+td {
+	text-align: left;
+}
+
+.game_info {
+	text-align: center;
+}
+
+.centered {
+	text-align: center;
+}
+
+.container {
+	position:relative;
+}
+
+.mines_table {
+	margin: auto;
+	line-height: 0;
+}
+
+.memos_table {
+	margin: auto;
+	line-height: 0;
+	border: collapse;
+}
+
+.slider_table {
+	margin: auto;
+	line-height: 0;
+	border: collapse;
+}
+
+.guess_table {
+	margin: auto;
+	text-align: center;
+}
+
+.puzzle_table {
+	font-size: 3rem;
+	text-align: center;
+	margin: auto;
+}
+
+.col-4 div {
+	margin: auto;
+	text-align: center;
+}
+
+.row img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+.log {
+    position: absolute;
+    right: 10px;
+    padding: 10px;
+    text-align:center;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.footer {
+	text-align: center;
+}
+
+.header {
+	text-align: right;
+	background-image: url("/images/header_bckgrnd.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	vertical-align: middle;
+	line-height: normal;
+	color:white;
+}
+
+.ratingInt {
+	text-align: center;
+}
