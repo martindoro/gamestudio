@@ -128,7 +128,7 @@ public class GuessController {
 	public String render() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<form action=\"/guess\" method=\"post\">\n");
-		sb.append("You are guessing number: <input type=\"text\" name=\"number\" th:value=\"${@guessController.isSolved}\"/>\n");
+		sb.append("You are guessing number: <input type=\"text\" name=\"number\" autofocus='autofocus' th:value=\"${@guessController.isSolved}\"/>\n");
 		sb.append("<input type=\"submit\" value=\"Guess\"/></form>\n");
 		return sb.toString();
 	}

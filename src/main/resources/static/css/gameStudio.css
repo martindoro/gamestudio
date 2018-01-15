@@ -19,6 +19,12 @@ td {
 	text-align: center;
 }
 
+.hint {
+	text-align: left;
+	position: absolute;
+	display: inline;
+}
+
 .centered {
 	text-align: center;
 }
@@ -44,12 +50,17 @@ td {
 	border: collapse;
 }
 
+.user_input {
+	text-align: right;
+}
+
 .guess_table {
 	margin: auto;
 	text-align: center;
 }
 
 .puzzle_table {
+	width: 3em;
 	font-size: 3rem;
 	text-align: center;
 	margin: auto;

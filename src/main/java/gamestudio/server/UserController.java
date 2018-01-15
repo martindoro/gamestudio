@@ -28,7 +28,7 @@ public class UserController {
 	private Player loggedPlayer;
 	private List<Favorite> favorites;
 	private String message;
-	
+
 	public String getMessage() {
 		return message;
 	}
@@ -68,22 +68,14 @@ public class UserController {
 
 	@RequestMapping("/register")
 	public String register(String login, String password, String rpassword, Model model) {
-		message = "";
 		Player p = new Player(login, password);
 		if (p != null && login != null && password != null) {
 			if (!playerService.existsPlayer(login)) {
-				if (password.equals(rpassword)) {
-					playerService.register(p);
-					loggedPlayer = playerService.login(p.getLogin(), p.getPassword());
-				} else {
-					message = "password not match";
-				}
+				playerService.register(p);
+				loggedPlayer = playerService.login(p.getLogin(), p.getPassword());
 			} else {
 				message = "login exists, choose another";
 			}
-		}
-		if(login == null || password == null) {
-			message = "bad input in registration fields";
 		}
 		fillModel(model);
 		return isLogged() ? "index" : "register";

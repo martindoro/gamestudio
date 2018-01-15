@@ -5,21 +5,23 @@
 <title>Register</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="css/bootstrap.css"></link>
-<link rel="stylesheet" href="./css/gameStudio.css" />
+<link rel="stylesheet" href="css/gameStudio.css" />
 </head>
 <body>
 	<div th:replace="header::nice_header"/>
 	
-	<form>
-		Choose your login: <input type="text" name="login" /><br /> Choose your password:
-		<input type="password" name="password" /><br /> Repeat password:
-		<input type="password" name="rpassword" /><br /> <input action="/register" method="post" type="submit"
+	<form class="user_input" action="/register" method="POST" onsubmit="return checkForm(this);">
+		Choose your login (not empty): <input type="text" name="login" autofocus='autofocus' /><br /> Choose your password (at least 1UpperCase, 1LowerCase, 1Number):
+		<input type="password" name="password" /><br /> Retype password:
+		<input type="password" name="rpassword" /><br /> <input type="submit"
 			value="Register new player" />
 	</form>
 	
-	<p th:utext='${@userController.message}'></p>
+	<p class="user_input" th:utext='${@userController.message}'></p>
 
 	<div th:replace="footer::nice_footer"/>
 
+	<script src="js/gamestudio.js"></script>
+	
 </body>
 </html>
