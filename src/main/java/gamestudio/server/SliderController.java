@@ -116,9 +116,10 @@ public class SliderController {
 	}
 
 	private void fillModel(Model model) {
-		model.addAttribute("sliderController", this);
+		model.addAttribute("controller", this);
 		model.addAttribute("scores", scoreService.getTopScores("slider"));
 		model.addAttribute("comments", commentService.getComments("slider"));
+		model.addAttribute("game", "slider");
 		if (userController.isLogged())
 			model.addAttribute("userRating",
 					ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "slider"));

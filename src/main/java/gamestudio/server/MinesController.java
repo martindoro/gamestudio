@@ -30,6 +30,7 @@ public class MinesController {
 	private Field field;
 	boolean marking = false;
 	private String message;
+	String currentGame = "mines";
 	
 	@Autowired
 	private RatingService ratingService;
@@ -43,11 +44,11 @@ public class MinesController {
 	private FavoriteService favoriteService;
 
 	public boolean isFavorite() {
-		return favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "mines"));
+		return favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
 	}
 	
 	public double getRating() {
-		return ratingService.getAverageRating("mines");
+		return ratingService.getAverageRating(currentGame);
 	}
 
 	public String getMessage() {
@@ -62,53 +63,53 @@ public class MinesController {
 	public String mines(Model model) {
 		marking = !marking;
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 	
 	@RequestMapping("/mines_favorite")
 	public String favorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "mines"));
+		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 	
 	@RequestMapping("/mines_comment")
 	public String comment(String content, Model model) {
-		commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), "mines", content));
+		commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), currentGame, content));
 		fillModel(model);
-		return "/mines";	
+		return currentGame;	
 	}
 	
 	@RequestMapping("/mines_set_rating")
 	public String rating(@RequestParam(value = "value", required = false) String value, Model model) {
 		try {
-			ratingService.setRating(new Rating("mines", userController.getLoggedPlayer().getLogin(), Integer.parseInt(value)));
+			ratingService.setRating(new Rating(currentGame, userController.getLoggedPlayer().getLogin(), Integer.parseInt(value)));
 		} catch (NumberFormatException | IllegalAccessException | SQLException e) {
-			return "mines";
+			return currentGame;
 		}
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 
 	@RequestMapping("/mines_beginner")
 	public String minesBeginner(Model model) {
 		createGame(8,8,8);
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 
 	@RequestMapping("/mines_intermediate")
 	public String minesIntermediate(Model model) {
 		createGame(16,16,25);
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 	
 	@RequestMapping("/mines_expert")
 	public String minesExpert(Model model) {
 		createGame(24,24,70);
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 	
 	@RequestMapping("/mines")
@@ -124,24 +125,25 @@ public class MinesController {
 			else if (field.getState() == GameState.SOLVED) {
 				message = "SOLVED";
 				if (userController.isLogged())
-					scoreService.addScore(new Score(userController.getLoggedPlayer().getLogin(), "mines",
+					scoreService.addScore(new Score(userController.getLoggedPlayer().getLogin(), currentGame,
 							1000 - 10 * field.getTimePlayed()));
 			}
 		} catch (NumberFormatException e) {
 			createGame(8,8,8);
 		}
 		fillModel(model);
-		return "mines";
+		return currentGame;
 	}
 
 	private void fillModel(Model model) {
-		model.addAttribute("minesController", this);
-		model.addAttribute("scores", scoreService.getTopScores("mines"));
-		model.addAttribute("comments", commentService.getComments("mines"));
+		model.addAttribute("controller", this);
+		model.addAttribute("scores", scoreService.getTopScores(currentGame));
+		model.addAttribute("comments", commentService.getComments(currentGame));
+		model.addAttribute("game", currentGame);
 		if(userController.isLogged())
-			model.addAttribute("userRating", ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "mines"));
+			model.addAttribute("userRating", ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), currentGame));
 		if(userController.isLogged())
-			model.addAttribute("favorite", favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "mines")));
+			model.addAttribute("favorite", favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame)));
 	}
 
 	public String render() {

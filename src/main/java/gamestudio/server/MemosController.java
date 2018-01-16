@@ -118,9 +118,10 @@ public class MemosController {
 	}
 
 	private void fillModel(Model model) {
-		model.addAttribute("memosController", this);
+		model.addAttribute("controller", this);
 		model.addAttribute("scores", scoreService.getTopScores("memos"));
 		model.addAttribute("comments", commentService.getComments("memos"));
+		model.addAttribute("game", "memos");
 		if (userController.isLogged()) {
 			model.addAttribute("userRating",
 					ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "memos"));

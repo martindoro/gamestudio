@@ -3,21 +3,21 @@
 
 <head>
 <meta charset="ISO-8859-1"></meta>
+<title th:text='${game}' />
+<link rel="stylesheet" href="css/bootstrap.css" />
 <link rel="stylesheet" href="/css/gameStudio.css" />
-<title>Guess the number</title>
-<link rel="stylesheet" href="css/bootstrap.css"></link>
 </head>
 <body>
 
-	<div th:replace="header::nice_header"></div>
+	<div th:replace="fragments::nice_header"></div>
 
 	<div class="guess_table"
-		th:if='${@guessController.gameState.equals(T(gamestudio.game.guessnumber.core.GameState).PLAYING)}'>
-		<p th:utext='${guessController.render()}' />
+		th:if='${controller.gameState.equals(T(gamestudio.game.guessnumber.core.GameState).PLAYING)}'>
+		<p th:utext='${controller.render()}' />
 	</div>
 
 	<div class="centered">
-		<b><p th:utext='${guessController.message}' /></b>
+		<b><p th:utext='${controller.message}' /></b>
 	</div>
 
 	<div class="container">
@@ -36,82 +36,13 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-2" th:if='${@userController.logged}'>
-				<p class="ratingInt">
-					<b>Is this game your favorite?</b>
-				</p>
-				<p th:if='${guessController.favorite}'>
-					<a href='guess_favorite'><img src="/images/isFavorite.png"
-						style="width: 60px; height: 60px;" /></a>
-				</p>
-				<p th:if='${not guessController.favorite}'>
-					<a href='guess_favorite'><img src="/images/notFavorite.png"
-						style="width: 60px; height: 60px;" /></a>
-				</p>
-			</div>
-			<div class="col-1" th:if='${@userController.logged}'>
-				<p class="ratingInt">
-					<b>Your rating</b> <span><a href='guess_set_rating?value=1'><img
-							th:if='${userRating >= 1}' src="/images/istar1.png" alt="star"
-							style="width: 40px; height: 35px;" /><img
-							th:if='${not (userRating >= 1)}' src="/images/star1.png"
-							alt="star" style="width: 40px; height: 35px;" /></a><a
-						href='guess_set_rating?value=2'><img
-							th:if='${userRating >= 2}' src="/images/istar2.png" alt="star"
-							style="width: 40px; height: 35px;" /><img
-							th:if='${not (userRating >= 2)}' src="/images/star2.png"
-							alt="star" style="width: 40px; height: 35px;" /></a><a
-						href='guess_set_rating?value=3'><img
-							th:if='${userRating >= 3}' src="/images/istar3.png" alt="star"
-							style="width: 40px; height: 35px;" /><img
-							th:if='${not (userRating >= 3)}' src="/images/star3.png"
-							alt="star" style="width: 40px; height: 35px;" /></a><a
-						href='guess_set_rating?value=4'><img
-							th:if='${userRating >= 4}' src="/images/istar4.png" alt="star"
-							style="width: 40px; height: 35px;" /><img
-							th:if='${not (userRating >= 4)}' src="/images/star4.png"
-							alt="star" style="width: 40px; height: 35px;" /></a><a
-						href='guess_set_rating?value=5'><img
-							th:if='${userRating >= 5}' src="/images/istar5.png" alt="star"
-							style="width: 40px; height: 35px;" /><img
-							th:if='${not (userRating >= 5)}' src="/images/star5.png"
-							alt="star" style="width: 40px; height: 35px;" /></a></span>
-				</p>
-			</div>
-			<div class="col-3">
-				<ol>
-					<table>
-						<tr>
-							<th>Top scores</th>
-						</tr>
-						<tr th:each='score : ${scores}'>
-							<td>
-								<li><span th:text='${score.username}'></span></li>
-							</td>
-							<td th:text='${score.value}' />
-						</tr>
-					</table>
-				</ol>
-			</div>
-			<div class="col-6">
-				<table>
-					<tr>
-						<th>User comments</th>
-					</tr>
-					<tr th:each='comment : ${comments}'>
-						<td th:text='${comment.username}' />
-						<td th:text='${comment.content}' />
-					</tr>
-				</table>
-				<form th:if='${@userController.logged}' action="/guess_comment"
-					method="post">
-					<input type="text" name="content"
-						placeholder="Enter your comment here"></input> <input
-						type="submit" value="Comment"></input>
-				</form>
-			</div>
+			<div th:replace="fragments::favorite"></div>
+			<div th:replace="fragments::rating"></div>
+			<div th:replace="fragments::score_table"></div>
+			<div th:replace="fragments::comments"></div>
 		</div>
 	</div>
-	<div th:replace="footer::nice_footer"></div>
+
+	<div th:replace="fragments::nice_footer"></div>
 </body>
 </html>

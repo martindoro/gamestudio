@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/gameStudio.css"></link>
 </head>
 <body>
-	<div th:replace="header::nice_header"></div>
+	<div th:replace="fragments::nice_header"></div>
 	
 	<div class="log" th:if='${@userController.logged}'>
 		<h4 class="centered" th:if='${not #lists.isEmpty(favorites)}'>
@@ -117,7 +117,7 @@
 			</div>
 		</div>
 	</div>
-	<div th:replace="footer::nice_footer"></div>
+	<div th:replace="fragments::nice_footer"></div>
 
 </body>
 </html>

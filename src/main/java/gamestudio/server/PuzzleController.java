@@ -114,9 +114,10 @@ public class PuzzleController {
 	}
 	
 	private void fillModel(Model model) {
-		model.addAttribute("puzzleController", this);
+		model.addAttribute("controller", this);
 		model.addAttribute("scores", scoreService.getTopScores("puzzle"));
 		model.addAttribute("comments", commentService.getComments("puzzle"));
+		model.addAttribute("game", "puzzle");
 		if(userController.isLogged())
 			model.addAttribute("userRating", ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "puzzle"));
 		if(userController.isLogged())

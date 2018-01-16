@@ -113,9 +113,10 @@ public class GuessController {
 	}
 
 	private void fillModel(Model model) {
-		model.addAttribute("guessController", this);
+		model.addAttribute("controller", this);
 		model.addAttribute("scores", scoreService.getTopScores("guess"));
 		model.addAttribute("comments", commentService.getComments("guess"));
+		model.addAttribute("game", "guess");
 		if (userController.isLogged())
 			model.addAttribute("userRating",
 					ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "guess"));

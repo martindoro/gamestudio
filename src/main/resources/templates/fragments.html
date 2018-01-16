@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="./css/gameStudio.css" />
+</head>
+<body>
+	<div th:fragment="nice_header">
+		<h1 class="header">My GameStudio </h1>
+	</div>
+
+	<div th:fragment="nice_footer">
+		<hr />
+		<p class="footer">
+			WebPage by Martin Doro 2018. <span th:if='${@userController.logged}'>
+				Logged in as <b><span style="text-transform: uppercase"
+					th:text='${@userController.loggedPlayer?.login}'></span></b>.
+			</span> <span th:if='${not @userController.logged}'> You are not
+				logged in. </span> <a href="/">HOME</a>
+		</p>
+	</div>
+
+	<div th:fragment="favorite" class="col-2"
+		th:if='${@userController.logged}'>
+		<p class="ratingInt">
+			<b>Is this game your favorite?</b>
+		</p>
+		<p th:if='${controller.favorite}'>
+			<a th:href='${game + "_favorite"}'><img src="/images/isFavorite.png"
+				style="width: 60px; height: 60px;" /></a>
+		</p>
+		<p th:if='${not controller.favorite}'>
+			<a th:href='${game + "_favorite"}'><img src="/images/notFavorite.png"
+				style="width: 60px; height: 60px;" /></a>
+		</p>
+	</div>
+
+	<div th:fragment="rating" class="col-1"
+		th:if='${@userController.logged}'>
+		<p class="ratingInt">
+			<b>Your rating</b> <span><a th:href='${game + "_set_rating?value=1"}'><img
+					th:if='${userRating >= 1}' src="/images/istar1.png" alt="star"
+					style="width: 40px; height: 35px;" /><img
+					th:if='${not (userRating >= 1)}' src="/images/star1.png" alt="star"
+					style="width: 40px; height: 35px;" /></a><a
+				th:href='${game + "_set_rating?value=2"}'><img th:if='${userRating >= 2}'
+					src="/images/istar2.png" alt="star"
+					style="width: 40px; height: 35px;" /><img
+					th:if='${not (userRating >= 2)}' src="/images/star2.png" alt="star"
+					style="width: 40px; height: 35px;" /></a><a
+				th:href='${game + "_set_rating?value=3"}'><img th:if='${userRating >= 3}'
+					src="/images/istar3.png" alt="star"
+					style="width: 40px; height: 35px;" /><img
+					th:if='${not (userRating >= 3)}' src="/images/star3.png" alt="star"
+					style="width: 40px; height: 35px;" /></a><a
+				th:href='${game + "_set_rating?value=4"}'><img th:if='${userRating >= 4}'
+					src="/images/istar4.png" alt="star"
+					style="width: 40px; height: 35px;" /><img
+					th:if='${not (userRating >= 4)}' src="/images/star4.png" alt="star"
+					style="width: 40px; height: 35px;" /></a><a
+				th:href='${game + "_set_rating?value=5"}'><img th:if='${userRating >= 5}'
+					src="/images/istar5.png" alt="star"
+					style="width: 40px; height: 35px;" /><img
+					th:if='${not (userRating >= 5)}' src="/images/star5.png" alt="star"
+					style="width: 40px; height: 35px;" /></a></span>
+		</p>
+	</div>
+
+	<div th:fragment="score_table" class="col-3">
+		<ol>
+			<table>
+				<tr>
+					<th>Top scores</th>
+				</tr>
+				<tr th:each='score : ${scores}'>
+					<td>
+						<li><span th:text='${score.username}'></span></li>
+					</td>
+					<td th:text='${score.value}' />
+				</tr>
+			</table>
+		</ol>
+	</div>
+
+	<div th:fragment="comments" class="col-6">
+		<table>
+			<tr>
+				<th>User comments</th>
+			</tr>
+			<tr th:each='comment : ${comments}'>
+				<td th:text='${comment.username}' />
+				<td th:text='${comment.content}' />
+			</tr>
+		</table>
+		<form th:if='${@userController.logged}' th:action='${game + "_comment"}'
+			method="post">
+			<input type="text" name="content"
+				placeholder="Enter your comment here"></input> <input type="submit"
+				value="Comment"></input>
+		</form>
+	</div>
+</body>
+</html>
