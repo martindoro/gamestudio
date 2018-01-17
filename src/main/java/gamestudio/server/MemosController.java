@@ -1,7 +1,5 @@
 package gamestudio.server;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -10,74 +8,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import gamestudio.entity.Comment;
-import gamestudio.entity.Favorite;
-import gamestudio.entity.Rating;
 import gamestudio.entity.Score;
 import gamestudio.game.memos.core.Field;
 import gamestudio.game.memos.core.GameState;
 import gamestudio.game.memos.core.Tile;
 import gamestudio.game.memos.core.TileState;
-import gamestudio.service.CommentService;
-import gamestudio.service.FavoriteService;
-import gamestudio.service.RatingService;
 import gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class MemosController {
+public class MemosController extends AbstractGameController{
 	private Field field;
-	private String message;
+	private final String currentGame = "memos";
 
-	@Autowired
-	private RatingService ratingService;
 	@Autowired
 	private ScoreService scoreService;
-	@Autowired
-	private UserController userController;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
-
-	public boolean isFavorite() {
-		return favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "memos"));
+	
+	@Override
+	public String getGameName() {
+		return currentGame;
 	}
-
-	public double getRating() {
-		return ratingService.getAverageRating("memos");
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	@RequestMapping("/memos_favorite")
-	public String favorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "memos"));
-		fillModel(model);
-		return "memos";
-	}
-
-	@RequestMapping("/memos_comment")
-	public String comment(String content, Model model) {
-		commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), "memos", content));
-		fillModel(model);
-		return "/memos";
-	}
-
-	@RequestMapping("/memos_set_rating")
-	public String rating(@RequestParam(value = "value", required = false) String value, Model model) {
-		try {
-			ratingService.setRating(
-					new Rating("memos", userController.getLoggedPlayer().getLogin(), Integer.parseInt(value)));
-		} catch (NumberFormatException | IllegalAccessException | SQLException e) {
-			return "memos";
-		}
-		fillModel(model);
-		return "memos";
-	}
-
+	
 	@RequestMapping("/memos_beginner")
 	public String memosBeginner(Model model) {
 		createGame(4, 4);
@@ -115,19 +66,6 @@ public class MemosController {
 		}
 		fillModel(model);
 		return "memos";
-	}
-
-	private void fillModel(Model model) {
-		model.addAttribute("controller", this);
-		model.addAttribute("scores", scoreService.getTopScores("memos"));
-		model.addAttribute("comments", commentService.getComments("memos"));
-		model.addAttribute("game", "memos");
-		if (userController.isLogged()) {
-			model.addAttribute("userRating",
-					ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "memos"));
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "memos")));
-		}
 	}
 
 	public String render() {

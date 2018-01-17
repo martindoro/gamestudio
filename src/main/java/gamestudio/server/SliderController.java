@@ -1,7 +1,5 @@
 package gamestudio.server;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -10,71 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import gamestudio.entity.Comment;
-import gamestudio.entity.Favorite;
-import gamestudio.entity.Rating;
 import gamestudio.entity.Score;
 import gamestudio.game.puzzle.core.Field;
 import gamestudio.game.puzzle.core.GameState;
-import gamestudio.service.CommentService;
-import gamestudio.service.FavoriteService;
-import gamestudio.service.RatingService;
 import gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class SliderController {
+public class SliderController extends AbstractGameController {
 	private Field field;
-	private String message;
-	private double rating;
+	private final String currentGame = "slider";
 
 	@Autowired
 	private ScoreService scoreService;
-	@Autowired
-	private UserController userController;
-	@Autowired
-	private RatingService ratingService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
 
-	public boolean isFavorite() {
-		return favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "slider"));
-	}
-
-	public double getRating() {
-		return ratingService.getAverageRating("slider");
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	@RequestMapping("/slider_favorite")
-	public String favorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "slider"));
-		fillModel(model);
-		return "slider";
-	}
-
-	@RequestMapping("/slider_set_rating")
-	public String rating(@RequestParam(value = "value", required = false) String value, Model model) {
-		try {
-			ratingService.setRating(
-					new Rating("slider", userController.getLoggedPlayer().getLogin(), Integer.parseInt(value)));
-		} catch (NumberFormatException | IllegalAccessException | SQLException e) {
-			return "slider";
-		}
-		fillModel(model);
-		return "slider";
-	}
-
-	@RequestMapping("/slider_comment")
-	public String comment(String content, Model model) {
-		commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), "slider", content));
-		fillModel(model);
-		return "slider";
+	@Override
+	public String getGameName() {
+		return currentGame;
 	}
 
 	@RequestMapping("/slider_beginner")
@@ -113,19 +63,6 @@ public class SliderController {
 		}
 		fillModel(model);
 		return "slider";
-	}
-
-	private void fillModel(Model model) {
-		model.addAttribute("controller", this);
-		model.addAttribute("scores", scoreService.getTopScores("slider"));
-		model.addAttribute("comments", commentService.getComments("slider"));
-		model.addAttribute("game", "slider");
-		if (userController.isLogged())
-			model.addAttribute("userRating",
-					ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), "slider"));
-		if (userController.isLogged())
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "slider")));
 	}
 
 	public String render() {

@@ -74,7 +74,7 @@ public class UserController {
 				playerService.register(p);
 				loggedPlayer = playerService.login(p.getLogin(), p.getPassword());
 			} else {
-				message = "login exists, choose another";
+				message = "login " + login + " exists, choose another";
 			}
 		}
 		fillModel(model);

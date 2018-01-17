@@ -19,6 +19,10 @@ public class Guess {
 	public GameState getGameState() {
 		return gameState;
 	}
+	
+	public void setGameState(GameState state) {
+		gameState = state;
+	}
 
 	public Guess() {
 		this.gameState = GameState.PLAYING;

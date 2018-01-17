@@ -1,7 +1,5 @@
 package gamestudio.server;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -10,83 +8,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import gamestudio.entity.Comment;
-import gamestudio.entity.Favorite;
-import gamestudio.entity.Rating;
 import gamestudio.entity.Score;
 import gamestudio.game.minesweeper.core.Clue;
 import gamestudio.game.minesweeper.core.Field;
 import gamestudio.game.minesweeper.core.GameState;
 import gamestudio.game.minesweeper.core.Tile;
 import gamestudio.game.minesweeper.core.TileState;
-import gamestudio.service.CommentService;
-import gamestudio.service.FavoriteService;
-import gamestudio.service.RatingService;
 import gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class MinesController {
+public class MinesController extends AbstractGameController{
 	private Field field;
-	boolean marking = false;
-	private String message;
-	String currentGame = "mines";
-	
-	@Autowired
-	private RatingService ratingService;
+	private boolean marking = false;
+	private final String currentGame = "mines";
+
 	@Autowired
 	private ScoreService scoreService;
-	@Autowired
-	private UserController userController;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
-
-	public boolean isFavorite() {
-		return favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
-	}
-	
-	public double getRating() {
-		return ratingService.getAverageRating(currentGame);
-	}
-
-	public String getMessage() {
-		return message;
-	}
 
 	public boolean isMarking() {
 		return marking;
+	}
+	
+	@Override
+	public String getGameName() {
+		return currentGame;
 	}
 
 	@RequestMapping("/mines_mark")
 	public String mines(Model model) {
 		marking = !marking;
-		fillModel(model);
-		return currentGame;
-	}
-	
-	@RequestMapping("/mines_favorite")
-	public String favorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		fillModel(model);
-		return currentGame;
-	}
-	
-	@RequestMapping("/mines_comment")
-	public String comment(String content, Model model) {
-		commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), currentGame, content));
-		fillModel(model);
-		return currentGame;	
-	}
-	
-	@RequestMapping("/mines_set_rating")
-	public String rating(@RequestParam(value = "value", required = false) String value, Model model) {
-		try {
-			ratingService.setRating(new Rating(currentGame, userController.getLoggedPlayer().getLogin(), Integer.parseInt(value)));
-		} catch (NumberFormatException | IllegalAccessException | SQLException e) {
-			return currentGame;
-		}
 		fillModel(model);
 		return currentGame;
 	}
@@ -133,17 +84,6 @@ public class MinesController {
 		}
 		fillModel(model);
 		return currentGame;
-	}
-
-	private void fillModel(Model model) {
-		model.addAttribute("controller", this);
-		model.addAttribute("scores", scoreService.getTopScores(currentGame));
-		model.addAttribute("comments", commentService.getComments(currentGame));
-		model.addAttribute("game", currentGame);
-		if(userController.isLogged())
-			model.addAttribute("userRating", ratingService.getUserRating(userController.getLoggedPlayer().getLogin(), currentGame));
-		if(userController.isLogged())
-			model.addAttribute("favorite", favoriteService.isFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame)));
 	}
 
 	public String render() {
