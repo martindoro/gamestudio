@@ -17,7 +17,7 @@ import gamestudio.service.ScoreService;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class GuessController extends AbstractGameController {
 	private Guess guess;
-	private GameState gameState = GameState.PLAYING;
+	private GameState gameState;
 	private final String currentGame = "guess";
 
 	@Autowired
@@ -45,7 +45,7 @@ public class GuessController extends AbstractGameController {
 			int result = guess.isSolved((Integer.parseInt(number)));
 			if (guess.getGameState() == GameState.SOLVED) {
 				message = "YES, " + number + " WAS MY NUMBER!";
-				guess.setGameState(GameState.SOLVED);
+				gameState = GameState.SOLVED;
 				if (userController.isLogged())
 					scoreService.addScore(
 							new Score(userController.getLoggedPlayer().getLogin(), "guess", guess.getScore()));
@@ -74,6 +74,7 @@ public class GuessController extends AbstractGameController {
 
 	private void createGame() {
 		guess = new Guess();
+		gameState = guess.getGameState();
 		message = "";
 	}
 }
