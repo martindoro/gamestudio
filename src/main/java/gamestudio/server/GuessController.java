@@ -19,6 +19,7 @@ public class GuessController extends AbstractGameController {
 	private Guess guess;
 	private GameState gameState;
 	private final String currentGame = "guess";
+	boolean isNewGame = true;
 
 	@Autowired
 	private ScoreService scoreService;
@@ -55,7 +56,13 @@ public class GuessController extends AbstractGameController {
 			if (result == -1)
 				message = "MY NUMBER IS LOWER";
 		} catch (NumberFormatException e) {
-			createGame();
+			if(isNewGame) {
+				createGame();
+				isNewGame = false;
+			}else {
+				message = "Bad Input only NUMBERS allowed!";
+				isNewGame = true;
+			}
 		}
 		fillModel(model);
 		return "game";
@@ -88,6 +95,7 @@ public class GuessController extends AbstractGameController {
 
 	private void createGame() {
 		guess = new Guess();
+		isNewGame = true;
 		gameState = guess.getGameState();
 		message = "";
 	}
