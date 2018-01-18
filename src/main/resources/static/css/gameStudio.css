@@ -1,14 +1,36 @@
 html {
-    font-size: 100%;
-    font-family: "Tw Cen MT", Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    text-align: justify;
-    color: black;
+	font-family: "Tw Cen MT", Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	text-align: justify;
+	color: black;
+}
+
+img {
+	width: 100%;
+	height: auto;
 }
 
 body {
-    background-image: url("/images/webpage_bckgrnd.jpg");
+	background-image: url("/images/webpage_bckgrnd.jpg");
+}
+
+#favorites {
+	border-collapse: separate;
+	border-spacing: 5px;
+	font-size: 1rem;
+	text-align: center;
+}
+
+#login {
+	text-align: right;
+	float: right;
+	margin-right: 10px;
+}
+
+#login img {
+	max-width: 100%;
+	height: 100%;
 }
 
 td {
@@ -34,7 +56,7 @@ td {
 }
 
 .container {
-	position:relative;
+	position: relative;
 }
 
 .mines_table {
@@ -54,20 +76,24 @@ td {
 	border: collapse;
 }
 
-.user_input {
-	text-align: right;
-}
-
 .guess_table {
 	margin: auto;
 	text-align: center;
 }
 
 .puzzle_table {
-	width: 3em;
+	table-layout: fixed; width : 5rem;
 	font-size: 3rem;
-	text-align: center;
 	margin: auto;
+}
+
+.puzzle_table td {
+	text-align: center;
+	width: 5rem;
+}
+
+.user_input {
+	text-align: right;
 }
 
 .col-4 div {
@@ -82,10 +108,10 @@ td {
 }
 
 .log {
-    position: absolute;
-    right: 10px;
-    padding: 10px;
-    text-align:center;
+	position: relative;
+	right: 10px;
+	padding: 10px;
+	text-align: center;
 }
 
 a:link {
@@ -115,7 +141,7 @@ a:hover {
 	background-size: cover;
 	vertical-align: middle;
 	line-height: normal;
-	color:white;
+	color: white;
 }
 
 .ratingInt {

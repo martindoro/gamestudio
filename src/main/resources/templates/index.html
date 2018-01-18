@@ -12,33 +12,34 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-				<div class="log" th:if='${not @userController.logged}'>
-					<a href="/login"><img src="/images/login.png" alt="Login" />Login</a>
-					<a href="/register"><img src="/images/register.png"
-						alt="register" />Register</a>
-				</div>
-				<p class="log" th:if='${@userController.logged}'>
-					<a href="/logout"><img src="/images/logout.png" alt="Logout" />Logout</a>
-				</p>
-			</div>
-			<div class="col-6">
 				<div class="log" th:if='${@userController.logged}'>
 					<h4 class="centered" th:if='${not #lists.isEmpty(favorites)}'>
 						MY FAVORITE GAMES
-						<table>
-							<tr th:each='favorite : ${favorites}'>
-								<td><h6 class="centered">
-										<a th:href='${favorite.game}'><img
-											th:src='${"images/" + favorite.game + "/" + favorite.game + "_logo.gif"}'
-											height="70" width="70" /> </a>
-									</h6></td>
+						<table id="favorites">
+							<tr>
+								<td id="favorites" th:each='favorite : ${favorites}'><a
+									th:href='${favorite.game}'><img
+										th:src='${"images/" + favorite.game + "/" + favorite.game + "_logo.gif"}'
+										height="70" width="70" />
+									</a><p th:text='${favorite.game}'></p></td>
 							</tr>
 						</table>
 					</h4>
 				</div>
 			</div>
+			<div class="col-6">
+				<p id="login" class="row" th:if='${not @userController.logged}'>
+					<a href="/login"><img id="login" src="/images/login.png" alt="Login" />Login</a>
+					<a href="/register"><img id="login" src="/images/register.png"
+						alt="register" />Register</a>
+				</p>
+				<p id="login" class="log" th:if='${@userController.logged}'>
+					<a href="/logout"><img src="/images/logout.png" alt="Logout" />Logout</a>
+				</p>
+			</div>
 		</div>
-		<hr/>
+	</div>
+	<div class="container">
 		<h2 class="centered">ALL GAMES</h2>
 
 		<div class="row">
@@ -52,7 +53,7 @@
 					5)
 				</p>
 				<a href="/mines"> <img src="/images/mines/mines_logo.gif"
-					alt="Minesweeper" height="170" width="170" />
+					alt="Minesweeper"/>
 				</a>
 			</div>
 			<div class="col-3">
@@ -65,7 +66,7 @@
 					5)
 				</p>
 				<a href="/puzzle"> <img src="/images/puzzle/puzzle_logo.gif"
-					alt="15 Puzzle" height="170" width="170" />
+					alt="15 Puzzle" />
 				</a>
 			</div>
 			<div class="col-3">
@@ -78,7 +79,7 @@
 					5)
 				</p>
 				<a href="/guess"> <img src="/images/guess/guess_logo.gif"
-					alt="Guess Number" height="170" width="170" />
+					alt="Guess Number"/>
 				</a>
 			</div>
 			<div class="col-3">
@@ -91,13 +92,11 @@
 					5)
 				</p>
 				<a href="/memos"> <img src="/images/memos/memos_logo.gif"
-					alt="Memos" height="170" width="170" />
+					alt="Memos"/>
 				</a>
 			</div>
 		</div>
-	</div>
 
-	<div class="container">
 		<div class="row">
 			<div class="col-3">
 				<p class="game_info">
@@ -109,7 +108,7 @@
 					5)
 				</p>
 				<a href="/slider"> <img src="/images/slider/slider_logo.gif"
-					alt="Slider" height="170" width="170" />
+					alt="Slider"/>
 				</a>
 			</div>
 			<div class="col-3"></div>
