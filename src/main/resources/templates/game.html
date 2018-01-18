@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title th:text='${game}'></title>
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="/css/gameStudio.css" />
+</head>
+<body>
+
+	<div th:replace="fragments::nice_header"></div>
+
+	<div>
+		<p th:utext='${controller.render()}' />
+	</div>
+
+	<div class="centered">
+		<p><b th:utext='${controller.message}'></b></p>
+	</div>
+
+	<hr></hr>
+
+	<div class="container">
+		<div class="row">
+			<div th:replace="fragments::favorite"></div>
+			<div th:replace="fragments::rating"></div>
+			<div th:replace="fragments::score_table"></div>
+			<div th:replace="fragments::comments"></div>
+		</div>
+	</div>
+
+	<div th:replace="fragments::nice_footer"></div>
+
+</body>
+</html>

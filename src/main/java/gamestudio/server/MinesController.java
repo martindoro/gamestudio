@@ -18,7 +18,7 @@ import gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class MinesController extends AbstractGameController{
+public class MinesController extends AbstractGameController {
 	private Field field;
 	private boolean marking = false;
 	private final String currentGame = "mines";
@@ -29,7 +29,7 @@ public class MinesController extends AbstractGameController{
 	public boolean isMarking() {
 		return marking;
 	}
-	
+
 	@Override
 	public String getGameName() {
 		return currentGame;
@@ -39,30 +39,30 @@ public class MinesController extends AbstractGameController{
 	public String mines(Model model) {
 		marking = !marking;
 		fillModel(model);
-		return currentGame;
+		return "game";
 	}
 
 	@RequestMapping("/mines_beginner")
 	public String minesBeginner(Model model) {
-		createGame(8,8,8);
+		createGame(8, 8, 8);
 		fillModel(model);
-		return currentGame;
+		return "game";
 	}
 
 	@RequestMapping("/mines_intermediate")
 	public String minesIntermediate(Model model) {
-		createGame(16,16,25);
+		createGame(16, 16, 25);
 		fillModel(model);
-		return currentGame;
+		return "game";
 	}
-	
+
 	@RequestMapping("/mines_expert")
 	public String minesExpert(Model model) {
-		createGame(24,24,70);
+		createGame(24, 24, 70);
 		fillModel(model);
-		return currentGame;
+		return "game";
 	}
-	
+
 	@RequestMapping("/mines")
 	public String mines(@RequestParam(value = "row", required = false) String row,
 			@RequestParam(value = "column", required = false) String column, Model model) {
@@ -80,10 +80,10 @@ public class MinesController extends AbstractGameController{
 							1000 - 10 * field.getTimePlayed()));
 			}
 		} catch (NumberFormatException e) {
-			createGame(8,8,8);
+			createGame(8, 8, 8);
 		}
 		fillModel(model);
-		return currentGame;
+		return "game";
 	}
 
 	public String render() {
@@ -122,6 +122,35 @@ public class MinesController extends AbstractGameController{
 			sb.append("</tr>\n");
 		}
 		sb.append("</table>\n");
+		sb.append("<div class='centered'>\n");
+		sb.append("<a href='mines_mark'>\n");
+		if (marking) {
+			sb.append("<span><b>Marking</b>(click to change)</span>\n");
+		} else {
+			sb.append("<span><b>Opening</b>(click to change)</span>\n");
+		}
+		sb.append("</a>\n");
+		sb.append("</div>\n");
+		sb.append("<br></br>\n");
+		sb.append("<div class='container'>\n");
+		sb.append("<div class='row'>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/mines_beginner'>\n");
+		sb.append("<input type='submit' value='New Beginner Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/mines_intermediate'>\n");
+		sb.append("<input type='submit' value='New Intermediate Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/mines_expert'>\n");
+		sb.append("<input type='submit' value='New Expert Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
 		return sb.toString();
 	}
 

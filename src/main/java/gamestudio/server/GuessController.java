@@ -36,7 +36,7 @@ public class GuessController extends AbstractGameController {
 	public String guessNew(Model model) {
 		createGame();
 		fillModel(model);
-		return "guess";
+		return "game";
 	}
 
 	@RequestMapping("/guess")
@@ -58,17 +58,31 @@ public class GuessController extends AbstractGameController {
 			createGame();
 		}
 		fillModel(model);
-		return "guess";
+		return "game";
 	}
 
 	public String render() {
 		StringBuilder sb = new StringBuilder();
 		if (gameState == GameState.PLAYING) {
-			sb.append("<form action=\"/guess\" method=\"post\">\n");
+			sb.append("<form class='centered' action=\"/guess\" method=\"post\">\n");
 			sb.append(
 					"You are guessing number: <input type=\"text\" name=\"number\" autofocus='autofocus' th:value=\"${@guessController.isSolved}\"/>\n");
 			sb.append("<input type=\"submit\" value=\"Guess\"/></form>\n");
 		}
+		sb.append("<br></br>\n");
+		sb.append("<div class='container'>\n");
+		sb.append("<div class='row'>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/guess_new'>\n");
+		sb.append("<input type='submit' value='New Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
 		return sb.toString();
 	}
 

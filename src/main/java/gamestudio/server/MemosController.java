@@ -33,21 +33,21 @@ public class MemosController extends AbstractGameController{
 	public String memosBeginner(Model model) {
 		createGame(4, 4);
 		fillModel(model);
-		return "memos";
+		return "game";
 	}
 
 	@RequestMapping("/memos_intermediate")
 	public String memosIntermediate(Model model) {
 		createGame(5, 4);
 		fillModel(model);
-		return "memos";
+		return "game";
 	}
 
 	@RequestMapping("/memos_expert")
 	public String memosExpert(Model model) {
 		createGame(6, 5);
 		fillModel(model);
-		return "memos";
+		return "game";
 	}
 
 	@RequestMapping("/memos")
@@ -65,7 +65,7 @@ public class MemosController extends AbstractGameController{
 			createGame(4, 4);
 		}
 		fillModel(model);
-		return "memos";
+		return "game";
 	}
 
 	public String render() {
@@ -101,6 +101,26 @@ public class MemosController extends AbstractGameController{
 			sb.append("</tr>\n");
 		}
 		sb.append("</table>\n");
+		sb.append("<br></br>\n");
+		sb.append("<div class='container'>\n");
+		sb.append("<div class='row'>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/memos_beginner'>\n");
+		sb.append("<input type='submit' value='New Beginner Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/memos_intermediate'>\n");
+		sb.append("<input type='submit' value='New Intermediate Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/memos_expert'>\n");
+		sb.append("<input type='submit' value='New Expert Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
 		return sb.toString();
 	}
 

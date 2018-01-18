@@ -31,21 +31,21 @@ public class SliderController extends AbstractGameController {
 	public String puzzleBeginner(Model model) {
 		createGame(3, 3, "a");
 		fillModel(model);
-		return "slider";
+		return "game";
 	}
 
 	@RequestMapping("/slider_intermediate")
 	public String puzzleIntermediate(Model model) {
 		createGame(4, 4, "b");
 		fillModel(model);
-		return "slider";
+		return "game";
 	}
 
 	@RequestMapping("/slider_expert")
 	public String puzzleExpert(Model model) {
 		createGame(5, 5, "c");
 		fillModel(model);
-		return "slider";
+		return "game";
 	}
 
 	@RequestMapping("/slider")
@@ -62,11 +62,17 @@ public class SliderController extends AbstractGameController {
 			createGame(3, 3, "a");
 		}
 		fillModel(model);
-		return "slider";
+		return "game";
 	}
 
 	public String render() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("<div class='container'>\n");
+		sb.append("<div class='row'>\n");
+		sb.append("<div class='col-1'>\n");
+		sb.append("<img src='" + hint() + "' height='150' width='150'></img>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-10'>\n");
 		sb.append("<table border=\"1\" class='slider_table'>\n");
 
 		for (int row = 0; row < field.getRowCount(); row++) {
@@ -89,6 +95,31 @@ public class SliderController extends AbstractGameController {
 			sb.append("</tr>\n");
 		}
 		sb.append("</table>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-1'>\n");
+		sb.append("</div>");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
+		sb.append("<br></br>\n");
+		sb.append("<div class='container'>\n");
+		sb.append("<div class='row'>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/slider_beginner'>\n");
+		sb.append("<input type='submit' value='New Beginner Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/slider_intermediate'>\n");
+		sb.append("<input type='submit' value='New Intermediate Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("<div class='col-4'>\n");
+		sb.append("<form class='centered' action='/slider_expert'>\n");
+		sb.append("<input type='submit' value='New Expert Game'>\n");
+		sb.append("</form>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
+		sb.append("</div>\n");
 		return sb.toString();
 	}
 
